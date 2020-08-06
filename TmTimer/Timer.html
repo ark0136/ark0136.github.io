@@ -701,6 +701,24 @@
 			$("#Pause").removeClass("hide");
 			
 			var kickoff = new Date();
+			var speech = $('[name="Speech"]:checked');
+                var typeOf = speech.attr("id");
+                var green, yellow, red;
+
+                if (typeOf == "custom") {
+                    green = parseFloat($("#cust-g").val()) * 60;
+                    yellow = parseFloat($("#cust-y").val()) * 60;
+                    red = parseFloat($("#cust-r").val()) * 60;
+
+                    speechName = $('[name="Speech"]:checked').val() + ' (' + $("#cust-g").val() + '-' + $("#cust-r").val() + ' mins)';
+                }
+
+                else {
+                    green = speech.attr("data-g");
+                    yellow = speech.attr("data-y");
+                    red = speech.attr("data-r");
+                    speechName = $('[name="Speech"]:checked').val();
+                }
 			
 			timer = setInterval(function () {
             var now2 = new Date();
