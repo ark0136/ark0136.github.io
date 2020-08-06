@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -344,7 +344,7 @@
                                 <div class="d-inline-block" style="width:450px">
                                     <div class="headings mb-2">Meeting Number </div> <input type="text" id="MeetingNumber" class="form-control d-block" />
                                 </div>
-							</div>	
+							</div>
 							<div class="controlSection">
                                 <div class="headings">Speech Type</div>
                                 <div class="radio-toolbar">
@@ -397,7 +397,7 @@
                                 <!--button-->
                                 <!--<button class=" g btn btn-secondary  mr-3 color-black" id="Start"><i class="fas fa-play" style="padding:3px 15px"></i></button>
                                 <button class="btn btn-secondary r " id="Stop" disabled="disabled"><i class="fas fa-stop" style="padding:3px 15px" ></i></button>-->
-                                
+
                             </div>
                             <span class="hide TIP">Timer In Progress... <i class="fas fa-cog fa-spin"></i></span>
                         </div>
@@ -448,11 +448,11 @@
                         <div class=" mb-3" style="margin-top:100px;">
                             <h3 align="center" id="WelcomeTag" disabled="disabled"> Welcome to CDK Toastmasters Club Meeting <span id="MeetingNumber_2"></span></h3>
 							<button class="  btn btn-secondary  actionBtn" id="Start">Start</button>
-							
+
 							<button class="btn btn-secondary actionBtn hide" id="Pause" disabled="disabled">Pause</button>
 							<button class="btn btn-secondary actionBtn hide" id="Resume" disabled="disabled">Resume</button>
                             <button class="btn btn-secondary actionBtn hide" id="Stop" disabled="disabled">Stop</button>
-							
+
                         </div>
                         <span class="timerDisplay" id="timerDisplayValue">00:00</span>
                         &nbsp;
@@ -490,7 +490,8 @@
         var timer;
         var cardColor;
         var speechName;
-		
+        var timeatpause;
+
         $("#wod").on("change", function () {
             if ($(this).is(":checked")) {
                 $(".wod").html('<div class="text-center" style="padding:125px 0;"><h3 style="color: white;text-shadow: 1px 1px 1px #272727;"> Word of the Day: ' + $("#word").val() + '</h3><h5 style="font-size:16px">Meaning: ' + $("#Meaning").val() + '</h5><h5 style="font-size:16px">Usage: ' + $("#Usage").val() + '</h5></div>');
@@ -655,7 +656,7 @@
             $(".Minimize").addClass("hide");
         });
 
-		
+
         $("#Stop").on("click", function () {
 
             var timetakenSecds = diff;
@@ -685,21 +686,21 @@
                 $(".timerDisplay").html("00:00");
             }
         });
-		
+
 		$("#Pause").on("click", function () {
-			var timeatpause = diff;
+			timeatpause = diff;
 			$("#Resume").removeAttr("disabled");
 			$("#Resume").removeClass("hide");
             $("#Pause").addClass("hide");
             clearInterval(timer);
 			$(".timerDisplay").html(new Date(1000 * timeatpause).toISOString().substr(14, 5));
         });
-		
+
 		$("#Resume").on("click", function () {
 			$("#Resume").removeAttr("disabled");
 			$("#Resume").addClass("hide");
 			$("#Pause").removeClass("hide");
-			
+
 			var kickoff = new Date();
 			var speech = $('[name="Speech"]:checked');
                 var typeOf = speech.attr("id");
@@ -719,31 +720,31 @@
                     red = speech.attr("data-r");
                     speechName = $('[name="Speech"]:checked').val();
                 }
-			
+
 			timer = setInterval(function () {
             var now2 = new Date();
-            diff2 = parseInt((now2 - kickoff) / 1000) + timeatpause;
-            if (diff2 == green) {
+            diff = parseInt((now2 - kickoff) / 1000) + timeatpause;
+            if (diff == green) {
 				$(".colorChange").removeClass("b").addClass("g");
                 cardColor = 'gC';
             }
-            else if (diff2 == yellow) {
+            else if (diff == yellow) {
                 $(".colorChange").removeClass("g").addClass("y");
                 cardColor = 'yC';
             }
-            else if (diff2 == red) {
+            else if (diff == red) {
                 $(".colorChange").removeClass("y").addClass("r");
                 cardColor = 'rC';
             }
-            else if (diff2 < green) {
+            else if (diff < green) {
                 cardColor = 'bC';
             }
             if (!$("#hideTimer").is(":checked"))
-                $(".timerDisplay").html(new Date(1000 * diff2).toISOString().substr(14, 5));
-            }, 1000);			
-				
+                $(".timerDisplay").html(new Date(1000 * diff).toISOString().substr(14, 5));
+            }, 1000);
+
         });
-		
+
     </script>
 
 
